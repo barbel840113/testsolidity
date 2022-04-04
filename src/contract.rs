@@ -5,9 +5,11 @@ use cosmwasm_std::{
 
 use cosmwasm_std::{CanonicalAddr, HumanAddr};
 use secret_toolkit::snip20::{register_receive_msg, token_info_query, transfer_msg, TokenInfo};
-use crate::msg::{SymbolResponse, HandleMsg, InitMsg, QueryMsg, FactoryResponse,     
-    PairNameResponse, DecimalsResponse, TokensResponse};
+use crate::msg::{HandleMsg, InitMsg, QueryMsg};
 use crate::state::{config, config_read, State};
+
+pub const BLOCK_SIZE: usize = 256;
+const CONTRACT_VERSION: u32 = 1;
 
 pub fn init<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
