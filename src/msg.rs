@@ -1,13 +1,13 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-use cosmwasm_std::{HumanAddr, StdResult, CosmosMsg, Querier};
+use cosmwasm_std::{HumanAddr, StdResult, CosmosMsg, Querier,CanonicalAddr};
 use crate::contract::BLOCK_SIZE;
 use secret_toolkit::snip20::{register_receive_msg, token_info_query, transfer_msg, TokenInfo};
-use scrt_addr::{Canonize, Humanize};
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct InitMsg {
-   
+   pub token0_contract : ContractInfo<HumanAddr>,
+   pub token1_contract : ContractInfo<HumanAddr>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -73,29 +73,5 @@ impl ContractInfo {
             self.address.clone(),
         )
     }    
-}
-
-
-impl Canonize<Config<CanonicalAddr>> for Config<HumanAddr> {
-    fn canonize (&self, api: &impl Api) -> StdResult<Config<CanonicalAddr>> {
-        Ok(Config {
-            factory_info:  self.factory_info.canonize(api)?,
-            lp_token_info: self.lp_token_info.canonize(api)?,
-            pair:          self.pair.canonize(api)?,
-            contract_addr: self.contract_addr.canonize(api)?,
-            viewing_key:   self.viewing_key.clone()
-        })
-    }
-}
-impl Humanize<Config<HumanAddr>> for Config<CanonicalAddr> {
-    fn humanize (&self, api: &impl Api) -> StdResult<Config<HumanAddr>> {
-        Ok(Config {
-            factory_info:  self.factory_info.humanize(api)?,
-            lp_token_info: self.lp_token_info.humanize(api)?,
-            pair:          self.pair.humanize(api)?,
-            contract_addr: self.contract_addr.humanize(api)?,
-            viewing_key:   self.viewing_key.clone()
-        })
-    }
 }
 
