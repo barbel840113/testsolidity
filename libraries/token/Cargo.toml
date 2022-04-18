@@ -1,0 +1,26 @@
+[package]
+name = "token"
+version = "0.1.0"
+authors = ["SecretTemplateExample"]
+edition = "2018"
+
+[dependencies]
+snafu = { version = "0.7.0" }
+serde = { version = "1.0.103", default-features = false, features = ["derive"] }
+schemars = "0.8.8"
+cosmwasm-std = { version = "0.10", package = "secret-cosmwasm-std" }
+cosmwasm-storage = { version = "0.10", package = "secret-cosmwasm-storage" }
+secret-toolkit = "0.2.0" # Uncomment this for extra tools
+#fadroma = "0.1.0"
+fadroma = { path = "../../fadroma/lib", features = [
+  "scrt",
+  "scrt-addr",
+  "scrt-icc",
+  "scrt-migrate",
+  "scrt-storage",
+  "scrt-admin",
+  "scrt-vk"
+] }
+
+[dev-dependencies]
+cosmwasm-schema = "0.16.7"

@@ -1,0 +1,63 @@
+[package]
+name = "sharepaircontract"
+version = "0.1.0"
+authors = ["SecretTemplateExample"]
+edition = "2018"
+
+exclude = [
+  # Those files are rust-optimizer artifacts. You might want to commit them for convenience but they should not be part of the source code publication.
+  "contract.wasm",
+  "hash.txt",
+]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+opt-level = 3
+debug = false
+rpath = false
+lto = true
+debug-assertions = false
+codegen-units = 1
+panic = 'abort'
+incremental = false
+overflow-checks = true
+
+[features]
+default = []
+# for quicker tests, cargo test --lib
+# for more explicit tests, cargo test --features=backtraces
+backtraces = ["cosmwasm-std/backtraces"]
+debug-print = ["cosmwasm-std/debug-print"]
+
+[dependencies]
+snafu = { version = "0.7.0" }
+serde = { version = "1.0.103", default-features = false, features = ["derive"] }
+schemars = "0.8.8"
+cosmwasm-std = { version = "0.10", package = "secret-cosmwasm-std" }
+cosmwasm-storage = { version = "0.10", package = "secret-cosmwasm-storage" }
+secret-toolkit = "0.2.0" # Uncomment this for extra tools
+fadroma = { path = "./fadroma/lib", features = [
+  "scrt",
+  "scrt-addr",
+  "scrt-icc",
+  "scrt-migrate",
+  "scrt-storage",
+  "scrt-admin",
+  "scrt-vk"
+] }
+
+token = { path = "./libraries/token"}
+snip20-reference-impl =  { path = "./libraries/snip20-reference-impl"}
+composable-snip20 = { path = "./fadroma/lib/composable-snip20" }
+
+[dev-dependencies]
+cosmwasm-schema = "0.16.7"
+
+[workspace]
+members = [
+    "libraries/token", 
+]
