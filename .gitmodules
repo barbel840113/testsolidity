@@ -1,0 +1,9 @@
+[submodule "fadroma"]
+	path = fadroma
+	url = https://github.com/hackbg/fadroma.git
+[submodule "libraries/snip20shade"]
+	path = libraries/snip20shade
+	url = https://github.com/scrtlabs/snip20-reference-impl
+[submodule "libraries/snip20-reference-impl"]
+	path = libraries/snip20-reference-impl
+	url = https://github.com/scrtlabs/snip20-reference-impl
